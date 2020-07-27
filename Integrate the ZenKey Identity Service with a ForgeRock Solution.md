@@ -6,7 +6,7 @@ ZenKey Identity Service is a unique, network-based identity solution that relies
 
 The ZenKey Identity Service integration with ForgeRock supports primary device flows, and secondary device flows using a browser on a laptop, desktop, or mobile device. For more information about these authentication flows, see the  <a href="https://developer.myzenkey.com/web" target="_blank">Server and Web Integration Guide</a>.
 
-[Server and Web Integration Guide]([url](https://developer.myzenkey.com/web)){:target="_blank"}
+[Server and Web Integration Guide](https://developer.myzenkey.com/web){:target="_blank"}
 
 For information about how to integrate ZenKey into iOS and Android applications, visit the <a href="http://developer.myzenkey.com" target="_blank">ZenKey Developer Resource Site</a>.
 
