@@ -4,19 +4,19 @@
 
 ZenKey Identity Service is a unique, network-based identity solution that relies on data derived from wireless carriers to verify users. It provides a highly secure way for online services to verify their customers’ identities when they login from any mobile device and, lets people easily log into websites. This solution helps eliminate the need to remember, manage or update dozens of usernames and passwords that customers use today to log into web sites.
 
-The ZenKey Identity Service integration with ForgeRock supports primary device flows, and secondary device flows using a browser on a laptop, desktop, or mobile device. For more information about these authentication flows visit [Server and Web Integration Guide](https://developer.myzenkey.com/web).
+The ZenKey Identity Service integration with ForgeRock supports primary device flows, and secondary device flows using a browser on a laptop, desktop, or mobile device. For more information about these authentication flows, see the  <a href="https://developer.myzenkey.com/web" target="_blank">Server and Web Integration Guide</a>.
 
-For information about how to integrate ZenKey into iOS and Android applications, visit the  [ZenKey Developer Resource Site](https://developer.myzenkey.com/).
+For information about how to integrate ZenKey into iOS and Android applications, visit the <a href="http://developer.myzenkey.com" target="_blank">ZenKey Developer Resource Site</a>.
 
 ## PreRequisites for integrating ZenKey and ForgeRock
 
- - You must have a ForgeRock instance or solution. For more information, see  [Create a New ForgeRock Account](https://backstage.forgerock.com/account/register).
- - You must be registered in the [ZenKey Developer Portal](https://portal.myzenkey.com/login) . Once your company is approved, make note of your client id and client secret. For more information, see the [ZenKey Portal User Guide](https://developer.myzenkey.com/portal/).
+ - You must have a ForgeRock instance or solution. For more information, see <a href="https://backstage.forgerock.com/account/register" target="_blank">Create a New ForgeRock Account</a>.
+ - You must be registered in the <a href="https://portal.myzenkey.com/login" target="_blank">ZenKey Developer Resource Site</a>. Once your company is approved, make note of your client id and client secret. For more information, see the  <a href="https://developer.myzenkey.com/portal/" target="_blank">ZenKey Portal User Guide</a>.
  - The wireless carriers must provision your client. Currently, the provisioning step may take a few days, but will be faster in the future.
 
 ## Install the ZenKey Authorization node
 
-1. In a browser, navigate to [https://github.com/ForgeRock/ZenKey-Auth-Tree-Node](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node).
+1. In a browser, navigate to  <a href="https://github.com/ForgeRock/ZenKey-Auth-Tree-Node" target="_blank">https://github.com/ForgeRock/ZenKey-Auth-Tree-Node</a>.
 2. Download the ZenKeyNode .jar file.
 3. Install the .jar file on the web server that is hosting Access Management. On Tomcat, put the jar file in the lib directory.
 For example: /tomcat/webapps/openam/WEB-INF/lib
@@ -24,25 +24,25 @@ For example: /tomcat/webapps/openam/WEB-INF/lib
 
 ## Configure the ZenKey Authorization node
 
-1. In a browser, navigate to [https://forgerock-dev.myzenkey.com/openam/console](https://forgerock-dev.myzenkey.com/openam/console).
-2. Log into the site by providing your ForgeRock login id and password.
-3. On the **Realms** page, click **Top Level Realm**.
-4. On the **Realm Overview** page, click **Authentication** > **Trees**.
-5. Click **Create Tree**.
-6. In the **Tree Name** field, enter a name for the node.
-7. Click **Create**.
-8. In the left side panel under **Configuration**, type 'ZenKey' in the filter field.
-9. When the ZenKey Auth Node appears in the left side panel, select the node and drag it to the main body of the page.
-10. Connect the the Start node to the ZenKey node: Drag the green dot on the Start node to the ZenKey Auth node.
-11. In the left side panel under **Configuration**, type 'Provision Dynamic Account' in the filter field.
-12. When the 'Provision Dynamic Account' node appears in the left side panel, select the node and drag it to the main body of the page.
-13. Connect the 'No Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Provision Dynamic Account' node.
-14. In the left side panel under **Configuration**, type 'Success' in the filter field.
-15. When the 'Success' node appears in the left side panel, select the node and drag it to the main body of the page.
-16. Connect the 'Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Success' node.
-17. Connect the right side dot on the 'Provision Dynamic Account' node to the left side dot on the 'Success' node.
-18. Delete the 'Failure' node.
-19. Click **Save**.
+1. In a browser, navigate to <a href="https://forgerock-dev.myzenkey.com/openam/console" target="_blank">[Create a New ForgeRock Account](https://forgerock-dev.myzenkey.com/openam/console)</a>.
+3. Log into the site by providing your ForgeRock login id and password.
+4. On the **Realms** page, click **Top Level Realm**.
+5. On the **Realm Overview** page, click **Authentication** > **Trees**.
+6. Click **Create Tree**.
+7. In the **Tree Name** field, enter a name for the node.
+8. Click **Create**.
+9. In the left side panel under **Configuration**, type 'ZenKey' in the filter field.
+10. When the ZenKey Auth Node appears in the left side panel, select the node and drag it to the main body of the page.
+11. Connect the the Start node to the ZenKey node: Drag the green dot on the Start node to the ZenKey Auth node.
+12. In the left side panel under **Configuration**, type 'Provision Dynamic Account' in the filter field.
+13. When the 'Provision Dynamic Account' node appears in the left side panel, select the node and drag it to the main body of the page.
+14. Connect the 'No Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Provision Dynamic Account' node.
+15. In the left side panel under **Configuration**, type 'Success' in the filter field.
+16. When the 'Success' node appears in the left side panel, select the node and drag it to the main body of the page.
+17. Connect the 'Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Success' node.
+18. Connect the right side dot on the 'Provision Dynamic Account' node to the left side dot on the 'Success' node.
+19. Delete the 'Failure' node.
+20. Click **Save**.
 
 ## Add Developer Portal credentials to the ZenKey Auth Node
 
