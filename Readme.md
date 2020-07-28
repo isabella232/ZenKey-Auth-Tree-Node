@@ -9,7 +9,7 @@ The ZenKey Identity Service integration with ForgeRock supports primary device f
 
 For information about how to integrate ZenKey into iOS and Android applications, visit the <a href="http://developer.myzenkey.com" target="_blank">ZenKey Developer Resource Site</a>.
 
-## PreRequisites for integrating ZenKey and ForgeRock
+## Prerequisites for integrating ZenKey and ForgeRock
 
  - You must have a ForgeRock instance or solution. For more information, see <a href="https://backstage.forgerock.com/account/register" target="_blank">Create a New ForgeRock Account</a>.
  - You must be registered in the <a href="https://portal.myzenkey.com/login" target="_blank">ZenKey Developer Resource Site</a>. Once your company is approved, make note of your client id and client secret. For more information, see the  <a href="https://developer.myzenkey.com/portal/" target="_blank">ZenKey Portal User Guide</a>.
