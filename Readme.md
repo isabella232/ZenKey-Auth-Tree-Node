@@ -17,7 +17,7 @@ For information about how to integrate ZenKey into iOS and Android applications,
 
 ## Install the ZenKey Authentication Node
 
-1. In a browser, navigate to  <a href="https://github.com/ForgeRock/ZenKey-Auth-Tree-Node" target="_blank">https://github.com/ForgeRock/ZenKey-Auth-Tree-Node</a>.
+1. In a browser, <a href="https://github.com/ForgeRock/ZenKey-Auth-Tree-Node" target="_blank">https://github.com/ForgeRock/ZenKey-Auth-Tree-Node</a>.
 2. Download the ZenKeyNode .jar file.
 3. Install the .jar file on the web server that is hosting Access Management. On Tomcat, put the jar file in the lib directory.
 For example: /tomcat/webapps/openam/WEB-INF/lib
@@ -25,9 +25,10 @@ For example: /tomcat/webapps/openam/WEB-INF/lib
 
 ## Configure the ZenKey Authentication Node
 
-1. In a browser, navigate to <a href="https://forgerock-dev.myzenkey.com/openam/console" target="_blank">[Login to ForgeRock Access Managment with your amadmin credentials.](https://forgerock-dev.myzenkey.com/openam/console)</a>.
+1. In a browser, <a href="https://forgerock-dev.myzenkey.com/openam/console" target="_blank">[Login to ForgeRock Access Managment with your amadmin credentials.](https://forgerock-dev.myzenkey.com/openam/console)</a>.
 3. Log into the site by providing your ForgeRock login id and password.
-4. On the **Realms** page, click **Top Level Realm**  ![Top Level Realm](E:/Companies/Maark/Documentation/DocRequests/Sprints/PI_8/8.1/ZEN-822_ForgeRock/Web/TopLevelRealm.png).
+4. On the **Realms** page, click **Top Level Realm**   
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TopLevelRealm.png).
 5. On the **Realm Overview** page, click **Authentication** > **Trees**.
 6. Click **Create Tree**.
 7. In the **Tree Name** field, enter a name for the node.
