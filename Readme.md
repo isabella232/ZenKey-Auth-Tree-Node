@@ -27,24 +27,37 @@ For example: /tomcat/webapps/openam/WEB-INF/lib
 
 1. In a browser, <a href="https://forgerock-dev.myzenkey.com/openam/console" target="_blank">[Login to ForgeRock Access Managment with your amadmin credentials.](https://forgerock-dev.myzenkey.com/openam/console)</a>.
 3. Log into the site by providing your ForgeRock login id and password.
-4. On the **Realms** page, click **Top Level Realm**   
+4. On the **Realms** page, click **Top Level Realm**.
  ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TopLevelRealm.png).
-5. On the **Realm Overview** page, click **Authentication** > **Trees**.
-6. Click **Create Tree**.
+5. On the **Realm Overview** page, click **Authentication** > **Trees**.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Trees.png).
+6. Click **Create Tree**.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/CreateTree.png).
 7. In the **Tree Name** field, enter a name for the node.
-8. Click **Create**.
-9. In the left side panel under **Components**, type 'ZenKey' in the filter field.
+8. Click **Create**.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TreeName_Create.png).
+9. In the left side panel under **Components**, type 'ZenKey' in the filter field.  
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TypeZenKey.png).
 10. When the ZenKey Auth Node appears in the left side panel, select the node and drag it to the main body of the page.
-11. Connect the the Start node to the ZenKey node: Drag the green dot on the Start node to the ZenKey Auth node.
-12. In the left side panel under **Components**, type 'Provision Dynamic Account' in the filter field.
+11. Connect the the Start node to the ZenKey node: Drag the green dot on the Start node to the ZenKey Auth node.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/ConnectStartToZKAuthNode.png).
+12. In the left side panel under **Components**, type 'Provision Dynamic Account' in the filter field.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TypeProvision.png).
 13. When the 'Provision Dynamic Account' node appears in the left side panel, select the node and drag it to the main body of the page.
-14. Connect the 'No Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Provision Dynamic Account' node.
-15. In the left side panel under **Components**, type 'Success' in the filter field.
+14. Connect the 'No Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Provision Dynamic Account' node.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/ConnectNoAccountToProvision.png).
+15. In the left side panel under **Components**, type 'Success' in the filter field.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/TypeSuccess.png).
 16. When the 'Success' node appears in the left side panel, select the node and drag it to the main body of the page.
-17. Connect the 'Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Success' node.
-18. Connect the right side dot on the 'Provision Dynamic Account' node to the left side dot on the 'Success' node.
-19. Delete the 'Failure' node.
-20. Click **Save**.
+17. Connect the 'Account exists' dot on the ZenKey Auth Node to the left side dot on the 'Success' node.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/ConnectAccountExistsToSuccess.png).
+18. Connect the right side dot on the 'Provision Dynamic Account' node to the left side dot on the 'Success' node.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/ConnectProvisionToSuccess.png).
+19. Delete the 'Failure' node.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/DeleteFailure.png).
+20. Click **Save**.  
+ ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/ClickSave.png).
+
 
 ## Add Developer Portal credentials to the ZenKey Auth Node
 
