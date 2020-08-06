@@ -12,7 +12,7 @@ For information about how to integrate ZenKey into iOS and Android applications,
 ## Prerequisites for integrating ZenKey and ForgeRock
 
  - You must have a ForgeRock instance or solution. For more information, see <a href="https://backstage.forgerock.com/account/register" target="_blank">Create a New ForgeRock Account</a>.
- - You must be registered in the <a href="https://portal.myzenkey.com/login" target="_blank">ZenKey Developer Resource Site</a>. Once your company is approved, make note of your client id and client secret. For more information, see the  <a href="https://developer.myzenkey.com/portal/" target="_blank">ZenKey Portal User Guide</a>.
+ - You must be registered in the <a href="https://portal.myzenkey.com/login" target="_blank">ZenKey Developer Portal/a>. Once your company is approved, make note of your client id and client secret. For more information, see the  <a href="https://developer.myzenkey.com/portal/" target="_blank">ZenKey Portal User Guide</a>.
  - The wireless carriers must provision your client. Currently, the provisioning step may take a few days, but will be faster in the future.
 
 ## Install the ZenKey Authentication Node
