@@ -17,8 +17,8 @@ For information about how to integrate ZenKey into iOS and Android applications,
 
 ## Install the ZenKey Authentication Node
 
-1. In a browser, go to <a href="https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/releases/tag/v1.0.0" target="_blank">https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/releases/tag/v1.0.0</a>.
-2. Download the ZenKeyNode .jar file.
+1. In a browser, go to <a href="https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/releases" target="_blank">https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/releases</a>.
+2. Download the latest ZenKeyNode .jar file.
 3. Install the .jar file on the web server that is hosting Access Management. On Tomcat, put the jar file in the lib directory.
 For example: /tomcat/webapps/openam/WEB-INF/lib
 4. Restart the server.
