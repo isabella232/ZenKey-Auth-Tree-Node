@@ -102,7 +102,7 @@ Steps for testing the ZenKey and ForgeRock configuration
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/01_sign_in.png)
 4. Select your ZenKey account
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_trusted_browser.png)
-Note: If you do not yet have a trusted browser, follow the on screen prompts to connect your browser to ZenKey.
+**Note:** If you are not using a trusted browser, follow the on screen prompts to connect your browser to ZenKey.
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_connect_trusted_browser.png)
 5. The authorization request is sent to your ZenKey app
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/03_auth_request_sent.png)
