@@ -98,4 +98,17 @@ You should verify that you correctly integrated ZenKey with your ForgeRock insta
 Steps for testing the ZenKey and ForgeRock configuration
 1. Logout of the Access Management instance.
 2. Access the Access Management instance again by visiting <a href="https://am_url.com/openam/console" target="_blank">https://am_url.com/openam/console</a>.
-3. Verify that you are prompted for ZenKey authentication.
+3. Select "Sign in with ZenKey"
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/01_sign_in.png)
+4. Select your trusted browser
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_trusted_browser.png)
+Note: If you do not yet have a trusted browser, follow the on screen prompts to connect your browser to ZenKey.
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_connect_trusted_browser.png)
+5. The authorization request is sent to your ZenKey app
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/03_auth_request_sent.png)
+6. Open the ZenKey app on your phone and press continue
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/04_continue_in_app.PNG)
+7. You have successfully logged in within your browser
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/06_logged_in.png)
+https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/06_logged_in.png
+
