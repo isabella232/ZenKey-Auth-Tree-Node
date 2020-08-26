@@ -100,7 +100,7 @@ Steps for testing the ZenKey and ForgeRock configuration
 2. Access the Access Management instance again by visiting <a href="https://am_url.com/openam/console" target="_blank">https://am_url.com/openam/console</a>.
 3. Select "Sign in with ZenKey"
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/01_sign_in.png)
-4. Select your trusted browser
+4. Select your ZenKey account
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_trusted_browser.png)
 Note: If you do not yet have a trusted browser, follow the on screen prompts to connect your browser to ZenKey.
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/02_connect_trusted_browser.png)
