@@ -1,3 +1,4 @@
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/ZenKey_rgb.png)
 # Integrate the ZenKey Identity Service with a ForgeRock Solution
 
 ## ZenKey Identity Service Overview
