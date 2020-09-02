@@ -64,7 +64,7 @@ For example: /tomcat/webapps/openam/WEB-INF/lib
 1. Select the ZenKey Auth Node.
 2. On the right side of the page, scroll down until you see the **Client ID** field. 
 3. Enter your client ID and client secret, from the ZenKey Developer Portal dashboard, into the  **Client ID** and the **Client Secret** fields. Afterwards, the page auto-populates the **Carrier Discovery URL**, **OIDC Provider Config URL**, and the **Redirect URL** fields. You configure the Redirect URL in the Developer Portal.
-4. Add scopes for app and site users: On the right side of the page, in the **OAuth** field, enter one for more of the following scopes:
+4. Add scopes for app and site users: On the right side of the page, in the **OAuth** field, enter one or more of the following scopes:
     - openid
     - profile name
     - email
