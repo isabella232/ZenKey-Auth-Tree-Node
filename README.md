@@ -132,7 +132,7 @@ Steps for testing the ZenKey and ForgeRock configuration
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/03_auth_request_sent.png)
 
 6. Open the ZenKey app on your phone and press continue <br>
-![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/04_continue_in_app.png)<br>  
+![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/continue_all_carriers.png)<br>  
 
 7. You have successfully logged in within your browser
 ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/06_logged_in.png)
