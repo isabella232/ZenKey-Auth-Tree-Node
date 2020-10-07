@@ -26,7 +26,7 @@ For example: /tomcat/webapps/openam/WEB-INF/lib
 
 ## Configure the ZenKey Authentication Node
 
-1. In a browser, login to ForgeRock Access Management with your amadmin credentials <a href="https://forgerock-dev.myzenkey.com/openam/console" target="_blank">[https://forgerock-dev.myzenkey.com/openam/console](https://forgerock-dev.myzenkey.com/openam/console)</a>.
+1. In a browser, login to ForgeRock Access Management with your amadmin credentials `https://am_url.com/openam/console`
 
 4. On the **Realms** page, click **Top Level Realm**.  
  ![](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/blob/master/Images/TopLevelRealm.png).
