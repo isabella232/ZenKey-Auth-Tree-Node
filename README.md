@@ -116,16 +116,20 @@ You should verify that you correctly integrated ZenKey with your ForgeRock insta
 
 1. Log out of the Access Management instance.
 
-2. Access the Access Management instance again by visiting https://am_url.com/openam/console.
+2. Access the Access Management instance again by visiting https://<am_url>.com/openam/console.
+
+3. Log in with ZenKey by clicking the green micro button.
+![enter image description here](Images/Test_ZK_FR_ConfigStep2.png)
 
 3. Select your ZenKey account.
-![enter image description here](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/raw/master/Images/02_trusted_browser.png)
+![enter image description here](Images/Test_ZK_FR_ConfigStep3.png)
 Note: If you are not using a trusted browser, follow the on-screen prompts to connect your browser to ZenKey.
-![enter image description here](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/raw/master/Images/02_connect_trusted_browser.png)
+![enter image description here](Images/Test_ZK_FR_ConfigStep4a.png)
 The authorization request is sent to your ZenKey app.
-![enter image description here](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/raw/master/Images/03_auth_request_sent.png)
+![enter image description here](Images/Test_ZK_FR_ConfigStep4b.png)
 
 4. Open the ZenKey app on your phone and press **Continue**.
-![enter image description here](https://github.com/ForgeRock/ZenKey-Auth-Tree-Node/raw/master/Images/continue_all_carriers1.png)
+![enter image description here](Images/Test_ZK_FR_ConfigStep4c.png)
 
 You have successfully logged in within your browser.
+![enter image description here](Images/Test_ZK_FR_ConfigStep5.png)
