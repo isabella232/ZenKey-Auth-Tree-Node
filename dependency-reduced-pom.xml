@@ -4,10 +4,15 @@
   <groupId>org.forgerock.am</groupId>
   <artifactId>ZenKeyNode</artifactId>
   <name>Template for an Auth Tree Node maven project</name>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.3</version>
   <description>An Authentication Tree Node for ForgeRock's Identity Platform</description>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.1.1</version>
@@ -25,6 +30,7 @@
                   <include>com.nimbusds:nimbus-jose-jwt</include>
                   <include>com.nimbusds:lang-tag</include>
                   <include>net.minidev:json-smart</include>
+                  <include>net.minidev:accessors-smart</include>
                   <include>net.minidev:asm</include>
                 </includes>
               </artifactSet>
@@ -36,8 +42,12 @@
   </build>
   <repositories>
     <repository>
+      <releases>
+        <checksumPolicy>fail</checksumPolicy>
+      </releases>
       <snapshots>
         <enabled>false</enabled>
+        <checksumPolicy>warn</checksumPolicy>
       </snapshots>
       <id>forgerock-private-releases</id>
       <name>ForgeRock Private Release Repository</name>
@@ -48,19 +58,163 @@
     <dependency>
       <groupId>org.forgerock.am</groupId>
       <artifactId>auth-node-api</artifactId>
-      <version>6.5.2</version>
+      <version>7.0.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>forgerock-util</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-plugin-framework</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+          <groupId>org.apache.servicemix.bundles</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-audit-core</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.forgerock.am</groupId>
+      <artifactId>auth-nodes</artifactId>
+      <version>7.0.1</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>openam-certs</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-scripting</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-devices</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-auth-hotp</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-push-notification</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-oauth-core</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>oauth-oauth2-client</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-auth-common</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-auth-oauth2</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>webhook-endpoint</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>cbor</artifactId>
+          <groupId>co.nstant.in</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15on</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-legacy-debug-api</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-ldap-utils</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-federation-library</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-saml2-client</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-selfservice-core</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-idm-integration-service</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.forgerock.am</groupId>
       <artifactId>openam-guice-core</artifactId>
-      <version>6.5.2</version>
+      <version>7.0.1</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>guice</artifactId>
+          <groupId>com.google.inject</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-util</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+          <groupId>org.apache.servicemix.bundles</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.forgerock.commons</groupId>
+      <artifactId>oauth-oidc-client</artifactId>
+      <version>26.0.1-20201019105645-c22b446</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>chf-http-core</artifactId>
+          <groupId>org.forgerock.http</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>json-web-token</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-openid-resolver</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-oauth-core</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>oauth-oauth2-client</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.forgerock.am</groupId>
       <artifactId>openam-core</artifactId>
-      <version>6.5.2</version>
+      <version>7.0.1</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -72,11 +226,23 @@
           <groupId>org.forgerock.am</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>openam-shared</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>openam-exceptions</artifactId>
           <groupId>org.forgerock.am</groupId>
         </exclusion>
         <exclusion>
           <artifactId>openam-config</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-audit-context</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-monitoring-core</artifactId>
           <groupId>org.forgerock.am</groupId>
         </exclusion>
         <exclusion>
@@ -104,6 +270,10 @@
           <groupId>org.forgerock.am</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>json-resource-http</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>openam-tokens</artifactId>
           <groupId>org.forgerock.am</groupId>
         </exclusion>
@@ -120,32 +290,44 @@
           <groupId>org.forgerock.opendj</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jato</artifactId>
-          <groupId>com.iplanet.jato</groupId>
+          <artifactId>opendj-core</artifactId>
+          <groupId>org.forgerock.opendj</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>cc</artifactId>
-          <groupId>com.sun.web.ui</groupId>
+          <artifactId>opendj-grizzly</artifactId>
+          <groupId>org.forgerock.opendj</groupId>
         </exclusion>
         <exclusion>
           <artifactId>click-extras</artifactId>
           <groupId>org.apache.click</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>ognl</artifactId>
+          <groupId>ognl</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>click-nodeps</artifactId>
           <groupId>org.apache.click</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-codec</artifactId>
+          <groupId>commons-codec</groupId>
         </exclusion>
         <exclusion>
           <artifactId>commons-collections</artifactId>
           <groupId>commons-collections</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-fileupload</artifactId>
-          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
         </exclusion>
         <exclusion>
           <artifactId>commons-logging-api</artifactId>
           <groupId>commons-logging</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>esapiport</artifactId>
+          <groupId>external</groupId>
         </exclusion>
         <exclusion>
           <artifactId>jaxrpc-api</artifactId>
@@ -168,16 +350,32 @@
           <groupId>com.sun.xml.fastinfoset</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jstl</artifactId>
-          <groupId>javax.servlet</groupId>
+          <artifactId>json</artifactId>
+          <groupId>org.json</groupId>
         </exclusion>
         <exclusion>
           <artifactId>vavr</artifactId>
           <groupId>io.vavr</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>javax.mail</artifactId>
+          <groupId>com.sun.mail</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsr305</artifactId>
+          <groupId>com.google.code.findbugs</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>metrics-core</artifactId>
+          <groupId>io.dropwizard.metrics</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>HdrHistogram</artifactId>
           <groupId>org.hdrhistogram</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-i18n</artifactId>
+          <groupId>org.forgerock.am</groupId>
         </exclusion>
         <exclusion>
           <artifactId>java-semver</artifactId>
@@ -199,12 +397,128 @@
           <artifactId>java-object-diff</artifactId>
           <groupId>de.danielbechler</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>openam-audit-core</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-ldap-utils</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>json-web-token</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>guice</artifactId>
+          <groupId>com.google.inject</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>openam-plugin-framework</artifactId>
+          <groupId>org.forgerock.am</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>forgerock-util</artifactId>
+          <groupId>org.forgerock.commons</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.forgerock.am</groupId>
-      <artifactId>auth-nodes</artifactId>
-      <version>6.5.2</version>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>2.0.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>powermock-module-junit4-common</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-easymock</artifactId>
+      <version>2.0.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>powermock-api-support</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>cglib-nodep</artifactId>
+          <groupId>cglib</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>easymock</artifactId>
+          <groupId>org.easymock</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito2</artifactId>
+      <version>2.0.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>powermock-api-support</artifactId>
+          <groupId>org.powermock</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.22.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>byte-buddy-agent</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>objenesis</artifactId>
+          <groupId>org.objenesis</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>byte-buddy</artifactId>
+          <groupId>net.bytebuddy</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>apiguardian-api</artifactId>
+          <groupId>org.apiguardian</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>opentest4j</artifactId>
+          <groupId>org.opentest4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-platform-commons</artifactId>
+          <groupId>org.junit.platform</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.oauth.core</groupId>
+      <artifactId>oauth</artifactId>
+      <version>20100527</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -220,9 +534,10 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <am.version>6.5.2</am.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <am.version>7.0.1</am.version>
+    <maven.compiler.source>11</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <powermock.version>2.0.2</powermock.version>
   </properties>
 </project>

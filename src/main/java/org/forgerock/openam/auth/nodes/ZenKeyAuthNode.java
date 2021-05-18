@@ -33,10 +33,7 @@ import static org.forgerock.oauth.clients.oidc.OpenIDConnectClient.NONCE;
 import static org.forgerock.openam.auth.node.api.Action.goTo;
 import static org.forgerock.openam.auth.node.api.Action.send;
 import static org.forgerock.openam.auth.node.api.SharedStateConstants.EMAIL_ADDRESS;
-import static org.forgerock.openam.auth.nodes.oauth.SocialOAuth2Helper.ATTRIBUTES_SHARED_STATE_KEY;
 import static org.forgerock.openam.auth.nodes.oauth.SocialOAuth2Helper.DEFAULT_OAUTH2_SCOPE_DELIMITER;
-import static org.forgerock.openam.auth.nodes.oauth.SocialOAuth2Helper.USER_INFO_SHARED_STATE_KEY;
-import static org.forgerock.openam.auth.nodes.oauth.SocialOAuth2Helper.USER_NAMES_SHARED_STATE_KEY;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.client.utils.URIBuilder;
@@ -54,7 +51,6 @@ import org.forgerock.openam.auth.node.api.Action;
 import org.forgerock.openam.auth.node.api.ExternalRequestContext;
 import org.forgerock.openam.auth.node.api.Node;
 import org.forgerock.openam.auth.node.api.NodeProcessException;
-import org.forgerock.openam.auth.node.api.SharedStateConstants;
 import org.forgerock.openam.auth.node.api.TreeContext;
 import org.forgerock.openam.auth.nodes.oauth.AbstractSocialAuthLoginNode;
 import org.forgerock.openam.auth.nodes.oauth.ProfileNormalizer;
@@ -92,7 +88,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.SecureRandom;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -114,6 +112,10 @@ public class ZenKeyAuthNode implements Node {
     static final String ZENKEY_ISSUER = "zenkey_issuer";
 
     private static final String MAIL_KEY_MAPPING = "mail";
+    public static final String SN = "sn";
+    public static final String GIVEN_NAME = "givenName";
+    public static final String USER_NAME = "userName";
+    public static final String UID = "uid";
     private final Logger logger = LoggerFactory.getLogger(ZenKeyAuthNode.class);
     private final Config config;
     private final ProfileNormalizer profileNormalizer;
@@ -234,7 +236,7 @@ public class ZenKeyAuthNode implements Node {
          */
         @Attribute(order = 1200, validators = {RequiredValueValidator.class})
         default Map<String, String> cfgAccountMapperConfiguration() {
-            return singletonMap("sub", "uid");
+            return singletonMap("email", "uid");
         }
 
         /**
@@ -244,14 +246,7 @@ public class ZenKeyAuthNode implements Node {
          */
         @Attribute(order = 1300, validators = {RequiredValueValidator.class})
         default Map<String, String> cfgAttributeMappingConfiguration() {
-        	Map<String,String> attributeMapConfiguration = new HashMap<String, String>();
-        	attributeMapConfiguration.put("sub", "uuid");
-        	attributeMapConfiguration.put("name.given_name", "givenName");
-        	attributeMapConfiguration.put("name.family_name", "sn");
-        	attributeMapConfiguration.put("email.value", "mail");
-        	attributeMapConfiguration.put("postal_code.value", "postalCode");
-        	attributeMapConfiguration.put("phone.value", "telephoneNumber");
-        	return attributeMapConfiguration;
+            return singletonMap("email", "uid");
         }
 
         /**
@@ -295,7 +290,7 @@ public class ZenKeyAuthNode implements Node {
         if (!CollectionUtils.isEmpty(request.parameters.get("error"))) {
             logger.debug("Error returned in query parameters of redirect");
             throw new NodeProcessException(String.format("%s: %s", request.parameters.get("error").get(0),
-                                                         request.parameters.get("error_description").get(0)));
+                    request.parameters.get("error_description").get(0)));
         } else if (!CollectionUtils.isEmpty(request.parameters.get("mccmnc")) && !CollectionUtils.isEmpty(
                 request.parameters.get("code"))) {
             return processOAuthTokenState(context);
@@ -318,7 +313,7 @@ public class ZenKeyAuthNode implements Node {
             addLogIfTooManyUsernames(userNames, userInfo);
 
             user = authModuleHelper.userExistsInTheDataStore(context.sharedState.get("realm").asString(),
-                                                             profileNormalizer.getAccountProvider(config), userNames);
+                    profileNormalizer.getAccountProvider(config), userNames);
         } catch (AuthLoginException e) {
             throw new NodeProcessException(e);
         }
@@ -333,31 +328,67 @@ public class ZenKeyAuthNode implements Node {
     private Action getAction(TreeContext context, Optional<String> user, Map<String,
             Set<String>> attributes, Map<String, Set<String>> userNames) {
         Action.ActionBuilder action;
-        if (user.isPresent()) {
-            logger.debug("The user {} already have an account. Go to {} outcome",
-                         user.get(), AbstractSocialAuthLoginNode.SocialAuthOutcome.ACCOUNT_EXISTS.name());
 
-            action = goTo(AbstractSocialAuthLoginNode.SocialAuthOutcome.ACCOUNT_EXISTS.name())
-                    .replaceSharedState(context.sharedState.add(SharedStateConstants.USERNAME, user.get()));
+        String userName = getSingleValueForAttribute(UID, attributes, "");
+        Map<String, String> attributeMappingConfiguration = this.config.cfgAttributeMappingConfiguration();
+
+        attributes.entrySet().forEach(e -> {
+            String value = e.getValue().iterator().hasNext() ? e.getValue().iterator().next() : null;
+
+        });
+
+        final List<Map.Entry<String, Object>> fields = attributeMappingConfiguration.entrySet()
+                .stream()
+                .map(e -> field(e.getValue(), getSingleValueForAttribute(e.getValue(), attributes, "")))
+                .collect(Collectors.toList());
+
+        final String configMailValue = getSingleValueForAttribute(MAIL_KEY_MAPPING, attributes, userName);
+
+        if (null == configMailValue || configMailValue.trim().isEmpty()) {
+            fields.add(new AbstractMap.SimpleEntry<>(MAIL_KEY_MAPPING, userName));
+        }
+        Map.Entry<String, Object>[] entries = new Map.Entry[fields.size()];
+        for (int i = 0; i < fields.size(); i++) {
+            entries[i] = fields.get(i);
+        }
+        final JsonValue jsonValue = json(object(entries));
+        logger.info("<====== DYNAMIC JSON  =======>");
+        logger.info("Dynamic json => " + jsonValue);
+
+        JsonValue staticJsonValue = json(object(
+                field(USER_NAME, getSingleValueForAttribute(USER_NAME, attributes, userName))
+                , field(GIVEN_NAME, getSingleValueForAttribute(GIVEN_NAME, attributes, ""))
+                , field(SN, getSingleValueForAttribute(SN, attributes, ""))
+                , field(MAIL_KEY_MAPPING, getSingleValueForAttribute(MAIL_KEY_MAPPING, attributes, userName))
+        ));
+
+        if (jsonValue.keys().contains("uid"))
+            jsonValue.remove("uid");
+
+        JsonValue sharedState = context.sharedState.put("objectAttributes",
+                staticJsonValue.merge(jsonValue));
+
+
+        sharedState.put("username", userName);
+
+
+        if (user.isPresent()) {
+            logger.debug("The user {} already has an account. Go to {} outcome",
+                    user.get(), AbstractSocialAuthLoginNode.SocialAuthOutcome.ACCOUNT_EXISTS.name());
+            action = goTo(AbstractSocialAuthLoginNode.SocialAuthOutcome.ACCOUNT_EXISTS.name()).replaceSharedState(
+                    sharedState);
         } else {
             logger.debug("The user doesn't have an account");
 
-            JsonValue sharedState = context.sharedState.put(USER_INFO_SHARED_STATE_KEY,
-                                                            json(object(
-                                                                    field(ATTRIBUTES_SHARED_STATE_KEY,
-                                                                          convertToMapOfList(attributes)),
-                                                                    field(USER_NAMES_SHARED_STATE_KEY,
-                                                                          convertToMapOfList(userNames))
-                                                            )));
 
             if (attributes.get(MAIL_KEY_MAPPING) != null) {
                 sharedState = sharedState.add(EMAIL_ADDRESS, attributes.get(MAIL_KEY_MAPPING).stream().findAny().get());
             } else {
                 logger.debug("Unable to ascertain email address because the information is not available. "
-                                     +
-                                     "It's possible you need to add a scope or that the configured provider does not " +
-                                     "have this "
-                                     + "information");
+                        +
+                        "It's possible you need to add a scope or that the configured provider does not " +
+                        "have this "
+                        + "information");
             }
 
             logger.debug("Go to " + AbstractSocialAuthLoginNode.SocialAuthOutcome.NO_ACCOUNT.name() + " outcome");
@@ -365,11 +396,23 @@ public class ZenKeyAuthNode implements Node {
                     sharedState);
         }
 
+        logger.debug("AFTER:::CONTEXT SHARED STATE => " + context.sharedState);
         if (config.saveUserAttributesToSession()) {
             logger.debug("user attributes are going to be saved in the session");
             attributes.forEach((key, value) -> action.putSessionProperty(key, value.stream().findFirst().get()));
         }
-        return action.build();
+        Action rtnAction = action.build();
+
+        logger.debug("ACTION SHARED-STATE: " + rtnAction.sharedState.toString());
+        return rtnAction;
+    }
+
+    private String getSingleValueForAttribute(String attributeName, Map<String, Set<String>> attributes, String defaultValue) {
+        final Set<String> set = attributes.get(attributeName);
+        String single = set == null ?
+                defaultValue
+                : set.iterator().hasNext() ? set.iterator().next() : defaultValue;
+        return single;
     }
 
     private org.forgerock.oauth.UserInfo getUserInfo(TreeContext context) throws NodeProcessException {
@@ -378,7 +421,7 @@ public class ZenKeyAuthNode implements Node {
         try {
             if (!context.request.parameters.containsKey("state")) {
                 throw new NodeProcessException("Not having the state could mean that this request did not come from "
-                                                       + "the IDP");
+                        + "the IDP");
             }
             HashMap<String, List<String>> parameters = new HashMap<>();
             parameters.put("state", singletonList(context.request.parameters.get("state").get(0)));
@@ -386,10 +429,10 @@ public class ZenKeyAuthNode implements Node {
 
             logger.debug("fetching the access token ...");
             return client.handlePostAuth(dataStore, parameters)
-                         .thenAsync(value -> {
-                             logger.debug("Fetch user info from userInfo endpoint");
-                             return client.getUserInfo(dataStore);
-                         }).getOrThrowUninterruptibly();
+                    .thenAsync(value -> {
+                        logger.debug("Fetch user info from userInfo endpoint");
+                        return client.getUserInfo(dataStore);
+                    }).getOrThrowUninterruptibly();
         } catch (OAuthException e) {
             throw new NodeProcessException("Unable to get UserInfo details from provider", e);
         }
@@ -399,11 +442,11 @@ public class ZenKeyAuthNode implements Node {
         if (userNames.values().size() > 1) {
             if (logger.isWarnEnabled()) {
                 String usernamesAsString = config.cfgAccountMapperConfiguration().entrySet()
-                                                 .stream()
-                                                 .map(entry -> entry.getKey() + " - " + entry.getValue())
-                                                 .collect(Collectors.joining(", "));
+                        .stream()
+                        .map(entry -> entry.getKey() + " - " + entry.getValue())
+                        .collect(Collectors.joining(", "));
                 logger.warn("Multiple usernames have been found for the user information {} with your configuration "
-                                    + "mapping {}", userInfo.toString(), usernamesAsString);
+                        + "mapping {}", userInfo.toString(), usernamesAsString);
             }
         }
     }
@@ -548,16 +591,16 @@ public class ZenKeyAuthNode implements Node {
 
         if (request.parameters.containsKey("login_hint_token")) {
             authenticationRequestBuilder = authenticationRequestBuilder.customParameter("login_hint_token",
-                                                                                        request.parameters
-                                                                                                .get("login_hint_token")
-                                                                                                .get(0));
+                    request.parameters
+                            .get("login_hint_token")
+                            .get(0));
         }
         AuthenticationRequest authenticationRequest = authenticationRequestBuilder.build();
 
 
         // send user to the ZenKey authorization endpoint to request an authorization code
         RedirectCallback authenticationRequestCallback = new RedirectCallback(authenticationRequest.toURI().toString(),
-                                                                              null, "GET");
+                null, "GET");
         authenticationRequestCallback.setTrackingCookie(true);
         return send(authenticationRequestCallback).replaceSharedState(sharedState).build();
     }
@@ -565,21 +608,22 @@ public class ZenKeyAuthNode implements Node {
     private OAuthClientConfiguration getOAuthClientConfiguration(Config config, TreeContext context) {
         OpenIDConnectClientConfiguration.Builder<?, OpenIDConnectClientConfiguration> builder =
                 OpenIDConnectClientConfiguration.openIdConnectClientConfiguration();
+
         return builder.withClientId(config.clientId())
-                      .withClientSecret(new String(config.clientSecret()))
-                      .withAuthorizationEndpoint(context.sharedState.get(ZENKEY_AUTHORIZATION_ENDPOINT).asString())
-                      .withTokenEndpoint(context.sharedState.get(ZENKEY_TOKEN_ENDPOINT).asString())
-                      .withScope(Collections.singletonList(config.scopeString()))
-                      .withScopeDelimiter(DEFAULT_OAUTH2_SCOPE_DELIMITER)
-                      .withBasicAuth(true)
-                      .withUserInfoEndpoint(context.sharedState.get(ZENKEY_USERINFO_ENDPOINT).asString())
-                      .withRedirectUri(URI.create(config.redirectURI()))
-                      .withProvider(config.provider())
-                      .withIssuer(context.sharedState.get(ZENKEY_ISSUER).asString())
-                      .withAuthenticationIdKey("sub")
-                      .withPkceMethod(PkceMethod.NONE)
-                      .withJwk(context.sharedState.get(ZENKEY_JWK_ENDPOINT).asString())
-                      .build();
+                .withClientSecret(new String(config.clientSecret()))
+                .withAuthorizationEndpoint(context.sharedState.get(ZENKEY_AUTHORIZATION_ENDPOINT).asString())
+                .withTokenEndpoint(context.sharedState.get(ZENKEY_TOKEN_ENDPOINT).asString())
+                .withScope(Collections.singletonList(config.scopeString()))
+                .withScopeDelimiter(DEFAULT_OAUTH2_SCOPE_DELIMITER)
+                .withBasicAuth(true)
+                .withUserInfoEndpoint(context.sharedState.get(ZENKEY_USERINFO_ENDPOINT).asString())
+                .withRedirectUri(URI.create(config.redirectURI()))
+                .withProvider(config.provider())
+                .withIssuer(context.sharedState.get(ZENKEY_ISSUER).asString())
+                .withAuthenticationIdKey("sub")
+                .withPkceMethod(PkceMethod.NONE)
+                .withJwk(context.sharedState.get(ZENKEY_JWK_ENDPOINT).asString())
+                .build();
     }
 
 
@@ -589,7 +633,7 @@ public class ZenKeyAuthNode implements Node {
     private ClientInformation getClientInformation() {
         ClientMetadata clientMetadata = new ClientMetadata();
         return new ClientInformation(new ClientID(config.clientId()), new Date(), clientMetadata,
-                                     new Secret(new String(config.clientSecret())));
+                new Secret(new String(config.clientSecret())));
     }
 
 }
